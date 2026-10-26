@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма товара</title>
+</head>
+<body>
+    <h1>
+        {% if product %}Редактировать товар{% else %}Добавить товар{% endif %}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <p>
+            <label>Название:</label>
+            <input type="text" name="name"
+                   value="{{ product.name|default:'' }}" required>
+        </p>
+
+        <p>
+            <label>Описание:</label>
+            <textarea name="description" required>{{ product.description|default:'' }}</textarea>
+        </p>
+
+        <p>
+            <label>Цена:</label>
+            <input type="number" name="price" step="0.01"
+                   min="0" value="{{ product.price|default:'' }}" required>
+        </p>
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <a href="{% url 'product_list' %}">Назад к товарам</a>
+</body>
+</html>
